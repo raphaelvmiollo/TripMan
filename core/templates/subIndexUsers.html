@@ -1,0 +1,27 @@
+{% extends 'indexAdmin.html' %}
+{% block especifico %}
+<h1> Usuários </h1>
+<div class="panel panel-default">
+<!--<div class="panel-heading">Usuários do sistema</div>-->
+<table class="table">
+<tr> 
+<td>Nome<td>
+<td>E-mail<td>
+<td>Usuário<td>
+<td>Cargo<td>
+<td>Tipo<td>
+<td>Ações<td>
+</tr>
+{% for user in users %}
+<tr>
+<td>{{ user.first_name }}<td>
+<td>{{ user.email }}<td>
+<td>{{ user.username }}<td>
+<td>{{ user.first_name }}<td>
+<td>{{ user.first_name }}<td>
+<td><td>
+</tr> <!-- Nome/email/usuario/cargo/tipo / <editar> <excluir> -->
+{% endfor %}
+</table>
+</div>
+{% endblock %} 

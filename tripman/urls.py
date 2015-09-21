@@ -19,6 +19,12 @@ from core.views import *
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', logar),
-    url(r'^indexadmin', indexADM),
+    url(r'^$', signin),
+    url(r'^signout', signout),
+    url(r'^indexAdmin', indexAdmin),
+    url(r'^indexClient', indexClient),
+    url(r'^indexDrive', indexDriver),
+    url(r'^subIndexUsers', subIndexUsers),
+    url(r'^subIndexTravels', subIndexTravels),
+    url(r'^subIndexVehicles', subIndexVehicles),
 ]
