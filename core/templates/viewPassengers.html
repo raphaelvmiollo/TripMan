@@ -1,0 +1,51 @@
+{% extends 'indexAdmin.html' %}
+{% block especifico %}
+
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+<div class="row">
+	<div  class="col-sm-10">
+		<h1>{{ title }}({{total}}/{{capacidade}})</h1>
+	</div>
+	<div class="col-sm-2">
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<table class="table table-striped">
+		<tr> 
+			<td><b>Nome</b><td>
+				<td><b>Matrícula / SIAPE</b><td>
+					<td><b>Identidade</b><td>
+						<td><b>Cargo</b><td>
+							<td><b>Remover</b></td> 
+						</tr>
+						{% for pass in passageiros %}
+						<tr>
+							<td>{{ pass.nome }}<td>
+								<td>{{ pass.matricula_siape }}<td>
+									<td>{{ pass.identidade }}<td>
+										<td>{{ pass.cargoUsuario }}<td>
+											<td> <a href="{% url 'core.views.removePassenger' tid=trid pid=pass.id %}"><i class="fa fa-ban"></i> Remover</a> </td> 
+										</tr>
+										{% endfor %}
+									</table>
+									<form class="navbar-form navbar-right" role="search" method="POST">
+										<div class="form-group">
+											{% csrf_token %}
+											{{ form }}
+											{% if total >= capacidade %}
+											<button type="submit" class="btn btn-primary" disabled>Adicionar</button>
+											{% else %}
+											<button type="submit" class="btn btn-primary">Adicionar</button>
+											{% endif %}
+											</div>
+										</form>
+									</div>
+									{% endblock %} 

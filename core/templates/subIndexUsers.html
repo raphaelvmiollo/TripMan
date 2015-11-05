@@ -1,27 +1,95 @@
 {% extends 'indexAdmin.html' %}
 {% block especifico %}
-<h1> Usuários </h1>
-<div class="panel panel-default">
-<!--<div class="panel-heading">Usuários do sistema</div>-->
-<table class="table">
-<tr> 
-<td>Nome<td>
-<td>E-mail<td>
-<td>Usuário<td>
-<td>Cargo<td>
-<td>Tipo<td>
-<td>Ações<td>
-</tr>
-{% for user in users %}
-<tr>
-<td>{{ user.first_name }}<td>
-<td>{{ user.email }}<td>
-<td>{{ user.username }}<td>
-<td>{{ user.first_name }}<td>
-<td>{{ user.first_name }}<td>
-<td><td>
-</tr> <!-- Nome/email/usuario/cargo/tipo / <editar> <excluir> -->
-{% endfor %}
-</table>
+
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<div class="row">
+ <div  class="col-sm-10">
+   <h1>Usuários</h1>
+ </div>
+ <div class="col-sm-2">
+  <a type="submit" c class="btn btn-primary" role="button" href="{% url 'core.views.addUser' %}" style="margin-top:7%; float:right;"><i class="fa fa-user-plus"></i> Cadastrar novo usuário</a>
+ </div>
 </div>
+<div class="panel panel-default">
+  <table class="table table-striped">
+    <tr> 
+      <td><b>Nome</b></td>
+      <td><b>E-mail</b></td>
+      <td><b>Usuário</b></td>
+      <!-- <td><b>Matrícula/SIAPE</b></td> -->
+      <td><b>Cargo</b></td>
+      <td><b>Tipo</b></td>
+      <td><b>Ações</b></td>
+    </tr>
+    {% for user2 in users %}
+    <tr>
+      <td>{{ user2.usuario.first_name }}</td>
+      <td>{{ user2.usuario.email }}</td>
+      <td>{{ user2.usuario.username }}</td>
+      <!-- <td>{{ user.matricula_siape }}</td> -->
+      <td>{{ user2.cargoUsuario }}</td>
+      <td>{{ user2.tipoUsuario }}</td>
+      {% if user2.usuario.id == user.id and uniqueAdm%} 
+      <td><a href="{% url 'core.views.editUser' uid=user2.id %}"><i class="fa fa-pencil"></i> Editar</a>  / <i class="fa fa-trash-o"></i> Excluir</td>
+      {% else %}
+      <td><a href="{% url 'core.views.editUser' uid=user2.id %}"> <i class="fa fa-pencil"></i> Editar</a>  / 
+       <a data-toggle="modal" onclick='clicked({{user2.id}})' data-target="#myModal"  style="cursor:pointer;"> <i class="fa fa-trash-o"></i>  Excluir</a>
+     </td>
+     {% endif %}
+     <td><td>  
+     </tr>
+     {% endfor %}
+   </table>
+ </div>
+
+
+ <script type="text/javascript">
+ var a = 0;
+ function clicked(id) {
+  window.a = id
+  document.getElementById("exc").href = "{% url 'core.views.removeUser' uid="12345" %}".replace('12345', id.toString());
+}
+
+function clickagain(){
+  document.getElementById("exc").click();
+}
+</script>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Exclusão de registro</h4>
+        
+      </div>
+      <div class="modal-body">
+        <p>Você tem certeza que deseja excluir este registro?</p>
+      </div>
+
+      <div class="modal-footer">
+       <a type="button" onclick="clickagain()" id="exc" class="btn btn-default" data-dismiss="modal" >Sim</a>
+       <a type="button" class="btn btn-default" data-dismiss="modal">Não</a>
+     </div>
+   </div>
+
+ </div>
+</div>
+
+
+
+
+
 {% endblock %} 

@@ -1,0 +1,104 @@
+{% extends 'indexAdmin.html' %}
+{% block especifico %}
+
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<div class="row">
+ <div  class="col-sm-10">
+   <h1>Relatórios de Viagens</h1>
+ </div>
+</div>
+<div class="panel panel-default">
+  <table class="table table-striped">
+    <tr> 
+      <td><b>Data/Horário</br>de Partida</b></td>
+      <td><b>Data/Horário</br> de Chegada</b></td>
+      <td><b>Localidade</br> de Partida</b></td>
+      <td><b>Localidade</br> de Chegada</b></td> 
+      <td><b>Objetivo</b></td>
+      <td><b>Observações</b></td>
+      <td><b>Responsável</b></td>
+      <td><b>Ramal</b></td>
+      <td><b>Veículo</b></td>
+      <td><b>Relatório</b></td>
+    </tr>
+    {% for tr in travels %}
+    <tr>
+      <td>{{tr.datahora_saida.day}}/{{tr.datahora_saida.month}}/{{tr.datahora_saida.year}} - {{tr.datahora_saida.hour}}:{{tr.datahora_saida.minute}}</td>
+      <td>{{tr.datahora_chegada.day}}/{{tr.datahora_chegada.month}}/{{tr.datahora_chegada.year}} - {{tr.datahora_chegada.hour}}:{{tr.datahora_chegada.minute}}</td>
+      <td>{{ tr.localidade_saida }}</td>
+      <td>{{ tr.localidade_chegada }}</td>
+      {% if tr.objetivo|length > 30 %}
+      <td>{{ tr.objetivo|slice:":27"|add:'...' }}</td>
+      {% else %} 
+      <td>{{ tr.objetivo }}</td>
+      {% endif %}
+      {% if tr.observacoes|length > 30 %}
+      <td>{{ tr.observacoes|slice:":27"|add:'...' }}</td>
+      {% else %} 
+      <td>{{ tr.observacoes }}</td>
+      {% endif %}
+      {% if tr.despesa_responsavel|length > 30 %}
+      <td>{{ tr.despesa_responsavel|slice:":27"|add:'...' }}</td>
+      {% else %} 
+      <td>{{ tr.despesa_responsavel }}</td>
+      {% endif %}
+      <td>{{ tr.ramal_contato }}</td>
+      <td>{{ tr.veiculo }}</td>
+      <td><a href="{% url 'core.views.viewReport' tid=tr.id %}"><i class="fa fa-eye"></i> Visualizar</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+
+
+
+<script type="text/javascript">
+var a = 0;
+function clicked(id) {
+  window.a = id
+  document.getElementById("exc").href = "{% url 'core.views.removeTravel' tid="12345" %}".replace('12345', id.toString());
+}
+
+function clickagain(){
+  document.getElementById("exc").click();
+}
+</script>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cancelamento de viagem</h4>
+        
+      </div>
+      <div class="modal-body">
+        <p>Você tem certeza que deseja cancelar esta viagem?</p>
+      </div>
+
+      <div class="modal-footer">
+       <a type="button" onclick="clickagain()" id="exc" class="btn btn-default" data-dismiss="modal" >Sim</a>
+       <a type="button" class="btn btn-default" data-dismiss="modal">Não</a>
+     </div>
+   </div>
+
+ </div>
+</div>
+
+
+
+
+{% endblock %} 

@@ -3,43 +3,36 @@
 {% include 'menuAdmin.html' %}
 {% endblock %}
 {% block conteudo %}
-    <div id="wrapper" style="margin-top:-20px;">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <p href="#">
-                        {{user.first_name}}
-                    </p>
-                </li>
-                <li>
-                    <a href="{% url 'core.views.subIndexUsers' %}">Usuários</a>
-                </li>
-                <li>
-                    <a href="{% url 'core.views.subIndexVehicles' %}">Veículos</a>
-                </li>
-                <li>
-                    <a href="{% url 'core.views.subIndexTravels' %}">Viagens</a>
-                </li>
-		<!--<li>
-                    <a href="#">Solicitar Viagem</a>
-                </li>-->
+
+<div class="row">
+
+    <div class="col-sm-2 " >
+        <div class="sidebar"  style=" margin-left: 25px;">
+
+            <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+                <li class="ac.tive"><a href="{% url 'core.views.subIndexUsers' %}"><span class="glyphicon glyphicon-user"></span>  Usuários</a></li>
+                <li><a href="{% url 'core.views.subIndexVehicles' %}"><i class="fa fa-bus"></i></span>  Veículos</a></li>
+                <li><a  href="{% url 'core.views.subIndexTravels' %}"><span class="glyphicon glyphicon-lock"></span>  Viagens</a></li>
+                <li><a href="{% url 'core.views.subIndexReports' %}"><i class="fa fa-file-text"></i>  Relatórios de Viagens</a></li>
             </ul>
         </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        {% block especifico %}
-
-                        {% endblock %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
     </div>
+
+    <div class="col-sm-10" style=" margin-left: -25px;">
+
+        {% block especifico %}
+
+
+
+        {% endblock %}
+    </div>
+</div>
+
+
+
+
 {% endblock %}
+
+
+
+

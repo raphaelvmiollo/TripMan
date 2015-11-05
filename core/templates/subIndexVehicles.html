@@ -1,4 +1,92 @@
 {% extends 'indexAdmin.html' %}
 {% block especifico %}
-<h1> Veículos </h1>
-{% endblock %} 
+
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+<div class="row">
+	<div  class="col-sm-10">
+		<h1>Veículos</h1>
+	</div>
+	<div class="col-sm-2">
+		<a type="submit" class="btn btn-primary" role="button" href="{% url 'core.views.addVehicle' %}" style="margin-top:7%; float:right;"><i class="fa fa-bus"></i>  Cadastrar novo veículo</a>
+	</div>
+</div>
+<div class="panel panel-default">
+	<!--<div class="panel-heading">Usuários do sistema</div>-->
+	<table class="table table-striped">
+		<tr> 
+			<td><b>Placa</b></td>
+			<td><b>Marca</b></td>
+			<td><b>Tipo de Veículo</b></td>
+			<td><b>Quantidade de lugares</b></td> 
+			<td><b>Ano de aquisição</b></td>
+			<td><b>Manutenção</b></td>
+			<td><b>Ações</b></td>
+		</tr>
+		{% for veh in vehicles %}
+		<tr>
+			<td>{{ veh.placa }}</td>
+			<td>{{ veh.marca }}</td>
+			<td>{{ veh.TipoVeiculo }}</td>
+			<td><span class="badge">{{ veh.numAssentos }}</span></td>
+			<td>{{ veh.ano }}</td>
+			{% if veh.manutencao %} 
+			<td>Sim</td>
+			{% else %}
+			<td>Não</td>
+			{% endif %}
+			<td><a href="{% url 'core.views.editVehicle' vid=veh.id %}"><i class="fa fa-pencil"></i> Editar</a>  / 
+				<a data-toggle="modal" onclick='clicked({{veh.id}})' data-target="#myModal"  style="cursor:pointer;"><i class="fa fa-trash-o"></i> Excluir</a>
+			</td>
+			<td><td>  
+			</tr> <!-- Nome/email/usuario/cargo/tipo / <editar> <excluir> -->
+			{% endfor %}
+		</table>
+	</div>
+
+
+	<script type="text/javascript">
+	var a = 0;
+	function clicked(id) {
+		window.a = id
+		document.getElementById("exc").href = "{% url 'core.views.removeVehicle' vid="12345" %}".replace('12345', id.toString());
+	}
+
+	function clickagain(){
+		document.getElementById("exc").click();
+	}
+	</script>
+
+
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Exclusão de registro</h4>
+
+				</div>
+				<div class="modal-body">
+					<p>Você tem certeza que deseja excluir este registro?</p>
+				</div>
+
+				<div class="modal-footer">
+					<a type="button" onclick="clickagain()" id="exc" class="btn btn-default" data-dismiss="modal" >Sim</a>
+					<a type="button" class="btn btn-default" data-dismiss="modal">Não</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	{% endblock %} 

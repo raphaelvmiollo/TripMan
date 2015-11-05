@@ -1,5 +1,5 @@
  <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid" style="background-color: #353C39;  ">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
@@ -7,10 +7,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">TripFuckingMan</a>
+      <a class="navbar-brand" href="#"><h3 style="color: white; margin-top: 0px;">TripMan</h3></a>
     </div>
       <form class="navbar-form navbar-right" role="search" method="POST">
-	  <a type="submit" class="btn btn-default" role="button" href="{% url 'core.views.signout' %}">Sair</a>
+        <a type="submit" class="btn btn-default" role="button" href="{% url 'core.views.index' %}"><i class="fa fa-map-o"></i> Mapa</a>
+	  <a type="submit" class="btn btn-default" role="button" href="{% url 'core.views.signout' %}"><i class="fa fa-sign-out">  </i> Sair</a>
       </form>
     </div> <!-- /.navbar-collapse -->
   </div> <!-- /.container-fluid -->

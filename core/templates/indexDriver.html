@@ -2,3 +2,36 @@
 {% block menu %}
 {% include 'menuAdmin.html' %}
 {% endblock %}
+{% block conteudo %}
+
+<div class="row">
+
+    <div class="col-sm-2 " >
+        <div class="sidebar"  style=" margin-left: 25px;">
+
+            <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+             <li><a href="{% url 'core.views.editDriver' %}"><span class="glyphicon glyphicon-user"></span> {{ request.user.first_name }} </a></li>
+                <li><a  href="{% url 'core.views.subIndexDriverTravels' %}"><span class="glyphicon glyphicon-lock"></span>  Viagens</a></li>
+<!--                 <li><a href="{% url 'core.views.subIndexReports' %}"><i class="fa fa-file-text"></i>  Relatórios de Viagens</a></li> -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-sm-10" style=" margin-left: -25px;">
+
+        {% block especifico %}
+
+
+
+        {% endblock %}
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+
+
+

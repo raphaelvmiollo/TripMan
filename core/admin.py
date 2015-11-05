@@ -5,7 +5,7 @@ from models import *
 
 
 admin.site.register(Veiculo)
-admin.site.register(TipoVeiculo)
+#admin.site.register(TipoVeiculo)
 admin.site.register(Usuario)
 admin.site.register(TipoUsuario)
 admin.site.register(CargoUsuario)

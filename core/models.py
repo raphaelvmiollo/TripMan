@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
  
 
 class Usuario(models.Model):
-	usuario = models.ForeignKey(User) #Classe Usuario associas a cada "Usuario" um User do sistema de autenticacao
-	matricula_siape = models.CharField(max_length = 20)
-	senha = models.CharField(max_length = 45)
+	usuario = models.OneToOneField(User) #Classe Usuario associas a cada "Usuario" um User do sistema de autenticacao
+	matricula_siape = models.CharField(max_length = 20, unique=True)
+	#senha = models.CharField(max_length = 45)
 	#login = models.CharField(max_length = 20)
 	#email = models.EmailField(max_length = 254)
 	cargoUsuario =  models.ForeignKey('CargoUsuario')
@@ -50,19 +50,24 @@ class Veiculo(models.Model):
  	potencia = models.IntegerField()
  	ano = models.IntegerField()
  	manutencao = models.BooleanField()
- 	TipoVeiculo = models.ForeignKey('TipoVeiculo')
+ 	
+ 	#TipoVeiculo = models.ForeignKey('TipoVeiculo')
+ 	
+ 	TipoVeiculo = models.CharField(max_length=30, default='')
+	numAssentos = models.IntegerField(default=0)
+
 
 	def __str__(self):
 		 return self.marca + ' ' + self.placa
 
 
 
-class TipoVeiculo(models.Model):
-	descricao = models.CharField(max_length=30)
-	qtdLugares = models.IntegerField()
+#class TipoVeiculo(models.Model):
+	#descricao = models.CharField(max_length=30)
+	#qtdLugares = models.IntegerField()
 
-	def __str__(self):
-		 return self.descricao
+	#def __str__(self):
+		 #return self.descricao
 
 
 
@@ -87,11 +92,13 @@ class Viagem(models.Model):
         despesa_responsavel = models.CharField(max_length = 50)
         ramal_contato = models.IntegerField()
         veiculo = models.ForeignKey('Veiculo', default='')
-        solicitante = models.ForeignKey('Usuario', related_name='solicitante', default='')
-        motorista = models.ForeignKey('Usuario', related_name='motorista', default='')
-        aprovador = models.ForeignKey('Usuario', related_name='aprovador', default='')
+        solicitante = models.ForeignKey('Usuario', related_name='solicitante', default='', null=True)
+        motorista = models.ForeignKey('Usuario', related_name='motorista', default='', null=True)
+        aprovador = models.ForeignKey('Usuario', related_name='aprovador', default='', null=True)
         passageiros = models.ManyToManyField('Passageiro', null=True)
-        status = models.BooleanField()
+        status = models.CharField(max_length=1)
+        justificativa = models.CharField(max_length=255, null=True, blank=True)
+        relatorio = models.TextField(null=True, blank=True)
   
         def __str__(self):
 		return self.localidade_saida.nome + ' -> ' + self.localidade_chegada.nome
